@@ -1,32 +1,34 @@
 # TEST Mobile — Interactive Preview
 
-A responsive, browser-based preview of the TEST lending-marketplace mobile app.
+This repository contains a browser-based recreation of the standalone TEST Flutter app.
 
-## What this is
+The preview follows the existing Flutter source for the onboarding flow, account-type selection, personal and Asset Financing login, Home dashboards, top bar, slide-out navigation drawer, credit marketplace, loan application selection and application lists.
 
-- A front-end prototype built with HTML, CSS and vanilla JavaScript.
-- Fictional sample institutions, offers, applications and account data.
-- Local-only interactions. No real authentication, transactions, financial decisions or API calls.
-- Designed to visually track the standalone Flutter app while allowing interface experiments independently.
+## Preview characteristics
+
+- HTML, CSS and vanilla JavaScript.
+- Royal Blue and Amber TEST colour palette.
+- Responsive mobile-first presentation.
+- Fictional demo account and marketplace data.
+- Local interactions only: no live authentication, backend, Firebase, lender connection or real transaction.
+- No favicon or generated logo asset.
 
 ## Run locally
 
-Open `index.html` in a browser, or serve this directory with any static web server.
+Open `index.html` in a browser, or serve this directory using any static web server.
 
 ## Publish with GitHub Pages
 
-1. Open this repository's **Settings → Pages**.
+1. Open **Settings → Pages** in this repository.
 2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch **main** and folder **/(root)**, then select **Save**.
-4. GitHub Pages will publish the site at the repository's Pages URL after its first deployment.
+3. Select **main** and **/(root)**, then click **Save**.
+4. GitHub Pages will publish the static preview at the repository's Pages URL.
 
-The site is static and does not need a build step or backend.
-
-## Project structure
+## Files
 
 - `index.html` — application entry point.
-- `styles.css` — Royal Blue and Amber design system.
-- `app.js` — screens, navigation and demo interactions.
-- `.nojekyll` — keeps GitHub Pages from running Jekyll processing.
+- `styles.css` — styling based on the Flutter app's layout and palette.
+- `app.js` — screens, navigation and sample interactions.
+- `.nojekyll` — static-site marker.
 
-All sample information is illustrative and must not be treated as a real financial offer.
+All sample information is illustrative. This preview is not a financial service or a live application channel.
