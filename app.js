@@ -34,7 +34,7 @@
   ];
   const state = {
     screen:"onboarding", mode:"personal",
-    user:{name:"Raymond Jefa Duma",id:"TEST-000124",email:"raymond@example.test",phone:"+255 700 000 000"},
+    user:{name:"Demo User",id:"TEST-000124",email:"demo@example.test",phone:"+255 700 000 000"},
     drawer:false, expanded:{}, banner:0, selectedCredit:"CO-001",
     creditFilter:"all", toast:"", toastTimer:0,
     loanApplications:[
@@ -66,6 +66,21 @@
   }
   function drawer() {
     if (!state.drawer) return "";
+    if (state.mode === "business") {
+      const bnav = (label, screen, glyph) => '<button class="drawer-row" data-action="go" data-screen="' + screen + '"><span class="drawer-glyph">' + ic(glyph,16) + '</span><span>' + label + '</span></button>';
+      const bgroup = (key, label, glyph, items) => '<div class="drawer-group ' + (state.expanded[key] ? "opened" : "") + '">' +
+        '<button class="drawer-row drawer-parent" data-action="expand" data-key="' + key + '"><span class="drawer-glyph">' + ic(glyph,16) + '</span><span>' + label + '</span>' + ic("caret",13) + '</button>' +
+        (state.expanded[key] ? '<div class="drawer-children">' + items.map(x => '<button class="drawer-child" data-action="go" data-screen="' + x[1] + '">' + x[0] + '</button>').join("") + '</div>' : '') + '</div>';
+      return '<div class="drawer-shade" data-action="close-drawer"><aside class="app-drawer" data-drawer-panel>' +
+        '<div class="drawer-brand"><b>TEST</b><small>STANDALONE PREVIEW</small></div><div class="drawer-scroll">' +
+        bnav("Home","business-dashboard","home") +
+        bgroup("profile","Profile","user",[["View Profile","profile"],["Change Password","settings"]]) +
+        bgroup("financing","Financing Solutions","info",[["Request Credit Limit","business-financing"],["Credit Line Applications","business-financing-apps"],["Utilization Request","business-utilization"],["References","business-references"]]) +
+        bgroup("businessLoan","Business Loan","file",[["Apply for a Loan","business-loan"],["My Applications","business-loan-apps"]]) +
+        bgroup("policy","Terms and Policy","shield",[["Terms and Conditions","business-terms"],["Privacy Policy","business-privacy"]]) +
+        bnav("Log Out","onboarding","logout") +
+        '</div></aside><button class="drawer-dismiss" data-action="close-drawer" aria-label="Close menu"></button></div>';
+    }
     const nav = (label, screen, glyph) => '<button class="drawer-row" data-action="go" data-screen="' + screen + '"><span class="drawer-glyph">' + ic(glyph,16) + '</span><span>' + label + '</span></button>';
     const group = (key, label, glyph, items) => '<div class="drawer-group ' + (state.expanded[key] ? "opened" : "") + '">' +
       '<button class="drawer-row drawer-parent" data-action="expand" data-key="' + key + '"><span class="drawer-glyph">' + ic(glyph,16) + '</span><span>' + label + '</span>' + ic("caret",13) + '</button>' +
@@ -138,6 +153,32 @@
       '<h2 class="stats-heading">My Stats</h2><div class="stats-grid">' + stats.map(item =>
         '<button class="stat-tile" data-action="go" data-screen="' + item[3] + '"><div class="stat-top"><strong>' + item[0] + '</strong><span>' + ic(item[2],16) + '</span></div><div class="stat-label">' + item[1] + '</div></button>'
       ).join("") + '</div>', false);
+  }
+
+  function businessDashboard() {
+    const banners = [
+      ["Get access to LPO financing and execute contracts without financial strain","Request LPO/Contract Financing","business-financing"],
+      ["Secure instant cash flow with Invoice Discounting to support your business operations","Request Invoice Discounting","business-financing"],
+      ["Get quick and structured financing through our Smart Loan product","Apply For Business Loan","business-loan"]
+    ];
+    const banner = banners[state.banner % banners.length];
+    const stats = [
+      ["00","Registered Users","user"],
+      ["00","Financial Institutions","bank"],
+      ["03","Credit Offers","money"],
+      ["00","Loans Requested","file"]
+    ];
+    return mainShell("Home",
+      '<section class="business-info-card"><strong>' + state.user.name + '</strong>' +
+      '<div><b>Mobile Number: </b>' + state.user.phone + '</div>' +
+      '<div><b>Email: </b>' + state.user.email + '</div>' +
+      '<div><b>Role: </b>TEST Client</div></section>' +
+      '<section class="business-carousel"><div>' + banner[0] + '</div><button data-action="go" data-screen="' + banner[2] + '">' + banner[1] + '</button></section>' +
+      '<div class="business-dots"><span class="' + (state.banner % 3 === 0 ? "active" : "") + '"></span><span class="' + (state.banner % 3 === 1 ? "active" : "") + '"></span><span class="' + (state.banner % 3 === 2 ? "active" : "") + '"></span></div>' +
+      '<div class="business-stat-grid">' + stats.map(item =>
+        '<button class="business-stat" data-action="info-toast"><div><strong>' + item[0] + '</strong>' + ic(item[2],16) + '</div><span>' + item[1] + '</span></button>'
+      ).join("") + '</div>'
+    , false);
   }
 
   function creditCard(item) {
@@ -219,7 +260,7 @@
 
   function render() {
     const views = {
-      onboarding, "account-chooser":accountChooser, login, register, dashboard,
+      onboarding, "account-chooser":accountChooser, login, register, dashboard, "business-dashboard":businessDashboard,
       "credit-marketplace":marketplace, "credit-detail":creditDetail,
       "select-employment":employmentSelection,
       "loan-employed":() => loanForm(false), "loan-self-employed":() => loanForm(true),
@@ -227,6 +268,14 @@
       profile, "how-to-apply":howTo, "help-center":helpCenter,
       "marketplace-applications":() => emptyPage("Marketplace Applications","There are no marketplace applications in this demo.","file"),
       "fee-tables":() => emptyPage("Fee Tables","Fee tables are not connected in this standalone preview.","file"),
+      "business-financing":() => emptyPage("Request Credit Limit","The financing request screen is represented as a disconnected demo.","info"),
+      "business-financing-apps":() => emptyPage("Credit Line Applications","No live credit-line application data is connected.","file"),
+      "business-utilization":() => emptyPage("Utilization Request","Utilization requests are disabled in the preview.","file"),
+      "business-references":() => emptyPage("References","Reference management is disabled in the preview.","file"),
+      "business-loan":() => emptyPage("Apply For Business Loan","The business-loan form is not connected in this preview.","file"),
+      "business-loan-apps":() => emptyPage("Business Loan Applications","No business-loan application data is connected.","file"),
+      "business-terms":() => emptyPage("Terms and Conditions","The standalone preview does not link to external policy documents.","shield"),
+      "business-privacy":() => emptyPage("Privacy Policy","The standalone preview does not link to external policy documents.","shield"),
       notifications:() => emptyPage("Notifications","You have no new notifications.","bell"),
       settings:() => emptyPage("Account Settings","Account security changes are disabled in the preview.","shield")
     };
@@ -273,7 +322,7 @@
       const username = form.querySelector("#login-user").value.trim();
       const password = form.querySelector("#login-password").value;
       if (!username || !password) { toast("Enter any demo username and password to continue."); return; }
-      go("dashboard"); toast("Demo session opened locally."); return;
+      go(state.mode === "business" ? "business-dashboard" : "dashboard"); toast("Demo session opened locally."); return;
     }
     if (form.id === "loan-form") {
       const data = new FormData(form);
@@ -293,8 +342,8 @@
 
   render();
   window.setInterval(() => {
-    if (state.screen === "dashboard" && !state.drawer) {
-      state.banner = (state.banner + 1) % 2;
+    if ((state.screen === "dashboard" || state.screen === "business-dashboard") && !state.drawer) {
+      state.banner = (state.banner + 1) % (state.screen === "business-dashboard" ? 3 : 2);
       render();
     }
   }, 5000);
