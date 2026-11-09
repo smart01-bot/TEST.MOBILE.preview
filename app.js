@@ -1,528 +1,293 @@
 (() => {
   "use strict";
-
   const root = document.getElementById("root");
   if (!root) return;
 
-  const icons = {
-    menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  const svg = {
+    bars: '<path d="M4 6h16M4 12h16M4 18h16"/>',
     bell: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>',
-    home: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
-    grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
-    file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>',
-    user: '<path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/>',
-    wallet: '<rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9h18M16 15h2"/><path d="M7 5V3h12"/>',
-    arrow: '<path d="M5 12h14M12 5l7 7-7 7"/>',
-    chevron: '<path d="m9 18 6-6-6-6"/>',
     back: '<path d="m15 18-6-6 6-6"/>',
-    close: '<path d="m18 6-12 12M6 6l12 12"/>',
-    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
-    check: '<path d="m5 12 4 4L19 6"/>',
+    home: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
+    user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
     shield: '<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="m9 12 2 2 4-4"/>',
-    briefcase: '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2"/>',
-    building: '<path d="M3 21h18M5 21V5l7-3 7 3v16M9 9h1M14 9h1M9 13h1M14 13h1M10 21v-4h4v4"/>',
-    help: '<circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.7 1.1c-.7 1.1-2.3 1.4-2.3 3M12 17h.01"/>',
-    logout: '<path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>',
-    edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/>',
+    question: '<circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.7 1.1c-.7 1.1-2.3 1.4-2.3 3M12 17h.01"/>',
+    money: '<path d="M3 6h18v13H3z"/><path d="M3 10h18M7 15h3"/><circle cx="16" cy="14" r="2"/>',
+    file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>',
+    briefcase: '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/>',
+    shop: '<path d="M3 10h18l-2-6H5zM5 10v10h14V10M9 20v-6h6v6"/>',
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-    sliders: '<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
-    plus: '<path d="M12 5v14M5 12h14"/>',
-    refresh: '<path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.5 9A7 7 0 0 1 18 6l2 6M4 12l2 6a7 7 0 0 0 12.5-3"/>',
-    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>'
+    tag: '<path d="M20 13 11 22l-9-9V3h10z"/><circle cx="7" cy="7" r="1"/>',
+    percent: '<path d="M19 5 5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>',
+    bank: '<path d="m3 9 9-6 9 6M4 10h16M5 10v9M9 10v9M15 10v9M19 10v9M3 20h18"/>',
+    calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+    logout: '<path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>',
+    close: '<path d="m18 6-12 12M6 6l12 12"/>',
+    caret: '<path d="m7 10 5 5 5-5"/>',
+    info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'
   };
+  const ic = (name, size = 20) => '<svg class="icon" viewBox="0 0 24 24" width="' + size + '" height="' + size + '" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (svg[name] || svg.info) + '</svg>';
 
-  const icon = (name, size = 20) =>
-    '<svg viewBox="0 0 24 24" width="' + size + '" height="' + size + '" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-    (icons[name] || icons.info) + '</svg>';
-
-  const offers = [
-    {
-      id: "OF-101", institution: "Kijani Finance", initials: "KF",
-      product: "Personal Flex Loan", category: "personal",
-      description: "A sample unsecured loan option for planned personal expenses.",
-      amount: "TZS 100,000 – 5,000,000", rate: "16% – 22% p.a.",
-      term: "6 – 24 months", fee: "Illustrative fee: 2%",
-      deadline: "Open demo listing", purpose: "Personal needs"
-    },
-    {
-      id: "OF-102", institution: "Umoja Credit Co.", initials: "UC",
-      product: "Salary Advance", category: "personal",
-      description: "A fictional short-term product concept for salaried customers.",
-      amount: "TZS 50,000 – 2,000,000", rate: "2% monthly",
-      term: "1 – 12 months", fee: "Illustrative fee: 1.5%",
-      deadline: "Open demo listing", purpose: "Short-term needs"
-    },
-    {
-      id: "OF-103", institution: "Pamoja Capital", initials: "PC",
-      product: "SME Growth Loan", category: "business",
-      description: "A fictional financing example for small-business growth plans.",
-      amount: "TZS 500,000 – 15,000,000", rate: "18% – 24% p.a.",
-      term: "6 – 36 months", fee: "Illustrative fee: 2.5%",
-      deadline: "Open demo listing", purpose: "Business growth"
-    },
-    {
-      id: "OF-104", institution: "Bahari Microfinance", initials: "BM",
-      product: "Working Capital", category: "business",
-      description: "A sample revolving working-capital product for demonstration.",
-      amount: "TZS 300,000 – 8,000,000", rate: "1.8% monthly",
-      term: "3 – 18 months", fee: "Illustrative fee: 2%",
-      deadline: "Open demo listing", purpose: "Working capital"
-    }
+  const creditOffers = [
+    {id:"CO-001",limit:"5,000,000",currency:"TZS",deadline:"30 Nov 2026",code:"KFLEX25",interest:"16% p.a.",type:"Personal Credit",bank:"Kijani Finance",payback:"6–24 months"},
+    {id:"CO-002",limit:"15,000,000",currency:"TZS",deadline:"15 Dec 2026",code:"SMEGROW",interest:"18% p.a.",type:"Business Credit",bank:"Pamoja Capital",payback:"6–36 months"},
+    {id:"CO-003",limit:"2,000,000",currency:"TZS",deadline:"20 Dec 2026",code:"SALARY2",interest:"2% monthly",type:"Salary Advance",bank:"Umoja Credit Co.",payback:"1–12 months"}
   ];
-
   const state = {
-    screen: "welcome",
-    selectedOffer: "OF-101",
-    offerFilter: "all",
-    appFilter: "all",
-    employment: "employed",
-    applications: [
-      { id: "LN-24081", type: "Loan", name: "Personal Flex Loan", amount: 1200000, status: "Under review", date: "08 Nov 2026" },
-      { id: "CR-33017", type: "Credit", name: "SME Growth Loan", amount: 3500000, status: "Pending", date: "02 Nov 2026" }
+    screen:"onboarding", mode:"personal",
+    user:{name:"Raymond Jefa Duma",id:"TEST-000124",email:"raymond@example.test",phone:"+255 700 000 000"},
+    drawer:false, expanded:{}, banner:0, selectedCredit:"CO-001",
+    creditFilter:"all", toast:"", toastTimer:0,
+    loanApplications:[
+      {code:"LN-24081",amount:"1,200,000",currency:"TZS",type:"Personal Loan",status:"Under Review",date:"08 Nov 2026",elapsed:"1 day ago"},
+      {code:"LN-24032",amount:"850,000",currency:"TZS",type:"Education Loan",status:"Pending",date:"04 Nov 2026",elapsed:"5 days ago"}
     ],
-    user: { name: "Alex Mrema", email: "alex.mrema@example.test", phone: "+255 700 000 000" },
-    drawerOpen: false,
-    toast: "",
-    activeFaq: -1,
-    toastTimer: null
+    creditApplications:[
+      {code:"CR-33017",amount:"3,500,000",currency:"TZS",type:"Business Credit",status:"Pending",date:"02 Nov 2026",elapsed:"7 days ago"}
+    ]
   };
 
-  const money = (value) => "TZS " + Number(value || 0).toLocaleString("en-TZ");
-  const initials = (name) => name.split(/\s+/).slice(0, 2).map(part => part[0] || "").join("").toUpperCase();
-  const currentOffer = () => offers.find(item => item.id === state.selectedOffer) || offers[0];
-  const statusClass = (value) => {
-    const normalized = String(value).toLowerCase();
-    if (normalized.includes("approved")) return "approved";
-    if (normalized.includes("review")) return "review";
-    if (normalized.includes("reject")) return "rejected";
-    return "pending";
-  };
-
-  function toast(message, isError = false) {
-    state.toast = message;
-    render();
-    window.clearTimeout(state.toastTimer);
-    state.toastTimer = window.setTimeout(() => {
-      state.toast = "";
-      render();
-    }, 2600);
+  function toast(message) {
+    state.toast = message; render();
+    clearTimeout(state.toastTimer);
+    state.toastTimer = setTimeout(() => { state.toast = ""; render(); }, 2600);
   }
-
-  function demoNotice() {
-    return '<div class="demo-strip">' + icon("info", 15) +
-      '<span>INTERACTIVE DEMO — sample data only. No real account, lender, transaction or backend is connected.</span></div>';
-  }
-
   function statusBar() {
-    return '<div class="statusbar"><span>9:41</span><span class="status-icons">' +
-      '<span>●</span><span>◖</span>' +
-      '<svg viewBox="0 0 18 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 5c4-4 12-4 16 0M4 8c3-3 7-3 10 0M7 11c1-1 3-1 4 0"/><path d="M9 13h.01"/></svg>' +
-      '</span></div>';
+    return '<div class="system-status"><span>9:41</span><span class="system-status-right"><span>●</span><span>◖</span><span>▰</span><span>▮</span></span></div>';
   }
-
-  function brand() {
-    return '<div class="brand-mark"><div><span class="brand-word">TEST</span><span class="brand-caption">FINANCE MARKETPLACE</span></div></div>';
+  function pageTopbar(title, back = true) {
+    return '<div class="main-topbar">' +
+      (back ? '<button class="topbar-icon" aria-label="Back" data-action="back">' + ic("back",19) + '</button>' : '<span class="topbar-spacer"></span>') +
+      '<div class="topbar-title">' + title + '</div>' +
+      '<button class="topbar-icon" aria-label="Notifications" data-action="go" data-screen="notifications">' + ic("bell",19) + '</button>' +
+      '<button class="topbar-icon" aria-label="Open menu" data-action="open-drawer">' + ic("bars",20) + '</button></div>';
   }
-
-  function bottomNav(active) {
-    const items = [
-      ["home", "Home", "home"],
-      ["offers", "Offers", "grid"],
-      ["applications", "Applications", "file"],
-      ["profile", "Profile", "user"]
-    ];
-    return '<nav class="bottom-nav" aria-label="Main navigation">' + items.map(([screen, label, glyph]) =>
-      '<button class="nav-item ' + (active === screen ? "active" : "") + '" data-action="navigate" data-screen="' + screen + '">' +
-      icon(glyph, 20) + '<span>' + label + '</span></button>'
-    ).join("") + '</nav>';
+  function notice() {
+    return '<div class="standalone-notice">STANDALONE DEMO — Card Informatics backend and Firebase are disconnected.</div>';
   }
-
   function drawer() {
-    if (!state.drawerOpen) return "";
-    const links = [
-      ["home", "Home", "home"],
-      ["offers", "Bank Credit Offers", "wallet"],
-      ["applications", "Loan Applications", "file"],
-      ["help", "How to Apply", "help"],
-      ["profile", "Profile", "user"]
+    if (!state.drawer) return "";
+    const nav = (label, screen, glyph) => '<button class="drawer-row" data-action="go" data-screen="' + screen + '"><span class="drawer-glyph">' + ic(glyph,16) + '</span><span>' + label + '</span></button>';
+    const group = (key, label, glyph, items) => '<div class="drawer-group ' + (state.expanded[key] ? "opened" : "") + '">' +
+      '<button class="drawer-row drawer-parent" data-action="expand" data-key="' + key + '"><span class="drawer-glyph">' + ic(glyph,16) + '</span><span>' + label + '</span>' + ic("caret",13) + '</button>' +
+      (state.expanded[key] ? '<div class="drawer-children">' + items.map(x => '<button class="drawer-child" data-action="go" data-screen="' + x[1] + '">' + x[0] + '</button>').join("") + '</div>' : '') + '</div>';
+    return '<div class="drawer-shade" data-action="close-drawer"><aside class="app-drawer" data-drawer-panel>' +
+      '<div class="drawer-brand"><b>TEST</b><small>STANDALONE PREVIEW</small></div><div class="drawer-scroll">' +
+      nav("Home","dashboard","home") +
+      group("profile","Profile","user",[["View Profile","profile"],["Change Password","settings"],["Change Security","settings"],["Change Birthdate","settings"]]) +
+      nav("How to Apply","how-to-apply","question") +
+      group("credit","Bank Credit Offers","money",[["Marketplace Credit Offers","credit-marketplace"],["My Applications","my-credit-applications"],["Replied Credit Offers","my-credit-applications"],["Approved Credit Offers","my-credit-applications"]]) +
+      group("loans","Loan Applications","file",[["Marketplace Applications","marketplace-applications"],["Apply for a Loan/Credit","select-employment"],["My Applications","my-loan-applications"]]) +
+      nav("Help Center","help-center","question") +
+      nav("Log Out","onboarding","logout") +
+      '</div></aside><button class="drawer-dismiss" data-action="close-drawer" aria-label="Close menu"></button></div>';
+  }
+  function mainShell(title, body, back = true) {
+    return '<main class="device">' + statusBar() + pageTopbar(title,back) + '<section class="flutter-scroll">' + body + '</section>' + drawer() +
+      (state.toast ? '<div class="snackbar">' + state.toast + '</div>' : '') + '</main>';
+  }
+
+  function onboarding() {
+    return '<main class="device">' + statusBar() + '<section class="auth-scroll"><div class="onboarding-content">' +
+      '<div class="test-logo-large">TEST</div><div class="onboarding-copy"><h1>Welcome to the<br>TEST App</h1>' +
+      '<p>Create an account to apply for loans, track application progress, and receive updates from financial institutions — all in one place.</p>' +
+      '<p>Our platform makes managing your loan journey fast and easy.</p></div>' +
+      '<div class="auth-actions"><button class="flutter-button secondary" data-action="go" data-screen="login">↗ <span>Continue to Account</span></button>' +
+      '<button class="flutter-button primary" data-action="go" data-screen="account-chooser">♙ <span>New Here? Join Us</span></button></div>' +
+      '<div class="auth-footer">TEST MOBILE · STANDALONE DEMO</div></div></section></main>';
+  }
+  function accountChooser() {
+    return '<main class="device">' + statusBar() + '<section class="auth-scroll"><div class="account-chooser">' +
+      '<div class="test-logo-large">TEST</div><h2>Choose Account Type</h2><div class="account-types">' +
+      '<button class="account-type" data-action="account-type" data-mode="personal"><span class="account-illustration">' + ic("user",44) + '</span><span>Personal</span></button>' +
+      '<button class="account-type" data-action="account-type" data-mode="business"><span class="account-illustration">' + ic("shop",44) + '</span><span>Asset Financing</span></button>' +
+      '</div><div class="auth-footer">TEST MOBILE · STANDALONE DEMO</div></div></section></main>';
+  }
+  function field(label, sw, placeholder, id, type = "text") {
+    return '<label class="flutter-field" for="' + id + '"><span class="field-label"><b>' + label + ' /</b> ' + sw + '</span><input id="' + id + '" name="' + id + '" type="' + type + '" placeholder="' + placeholder + '"></label>';
+  }
+  function login() {
+    const account = state.mode === "business" ? "Asset Financing" : "Personal Account";
+    return '<main class="device">' + statusBar() + '<section class="auth-scroll login-scroll"><div class="login-page">' +
+      '<div class="test-logo-login">TEST</div><form class="login-card" id="login-form">' +
+      '<div class="login-card-heading"><b>Login</b><span>' + account + '</span></div>' +
+      field("Username","Jina la Mtumiaji","Email or Phone: (+255..)","login-user") +
+      field("Password","Neno la Siri","Enter password","login-password","password") +
+      '<div class="login-forgot"><button type="button" class="link-button" data-action="info-toast">Reset Password</button></div>' +
+      '<div class="login-register">Don&#39;t have an account? <button type="button" class="link-button" data-action="go" data-screen="register">Register</button></div>' +
+      '<div class="login-card-footer"><button type="button" class="link-button choose-type" data-action="go" data-screen="account-chooser">← Choose Account Type</button><button class="login-submit" type="submit">Login</button></div>' +
+      '</form><div class="auth-footer">TEST MOBILE · STANDALONE DEMO</div><div class="login-demo-caption">Preview only — any username and password will open the sample app. Nothing is sent to a server.</div></div></section></main>';
+  }
+  function register() {
+    return '<main class="device">' + statusBar() + '<section class="auth-scroll"><div class="register-page"><div class="test-logo-login">TEST</div><div class="login-card"><div class="login-card-heading"><b>Create Account</b><span>Personal Account</span></div><p class="register-hint">Registration screens are represented as a visual preview. No personal information is submitted.</p><button class="flutter-button secondary" data-action="go" data-screen="login">Return to Login</button></div></div></section></main>';
+  }
+
+  function dashboard() {
+    const stats = [
+      ["02","Loan Applications","file","my-loan-applications"],
+      ["01","Credit Applications","money","my-credit-applications"],
+      ["03","Credit Offers","money","credit-marketplace"],
+      ["04","Fee Tables","file","fee-tables"]
     ];
-    return '<div class="drawer-backdrop" data-action="close-drawer">' +
-      '<aside class="drawer" aria-label="Navigation menu" data-stop-propagation>' +
-      '<div class="drawer-head">' + brand() +
-      '<button class="icon-btn" style="color:var(--p);border-color:var(--b);background:#f7faff" data-action="close-drawer" aria-label="Close menu">' + icon("close") + '</button></div>' +
-      '<div class="drawer-user"><div class="avatar">' + initials(state.user.name) + '</div><div><strong>' + state.user.name + '</strong><small>Personal demo account</small></div></div>' +
-      '<div class="drawer-label">Workspace</div>' +
-      links.map(([screen, label, glyph]) => '<button class="drawer-link ' + (state.screen === screen ? "active" : "") + '" data-action="navigate" data-screen="' + screen + '">' + icon(glyph, 17) + label + '</button>').join("") +
-      '<div class="drawer-label">Preview</div>' +
-      '<button class="drawer-link" data-action="show-about">' + icon("info", 17) + 'About this demo</button>' +
-      '<button class="drawer-link" data-action="restart">' + icon("refresh", 17) + 'Restart preview</button>' +
-      '</aside></div>';
+    const banner = state.banner === 0
+      ? ["Get loans easily from various institutions","Apply for a Loan","select-employment"]
+      : ["Elevate your business with our Credit Offers","View Credit Offers","credit-marketplace"];
+    return mainShell("Home", notice() +
+      '<div class="dashboard-user"><div class="user-placeholder">' + ic("user",24) + '</div><div class="dashboard-user-copy"><strong>' + state.user.name + '</strong><div><span>ID: </span><b>' + state.user.id + '</b></div></div></div>' +
+      '<section class="home-carousel"><div class="carousel-message">' + banner[0] + '</div><button class="carousel-button" data-action="go" data-screen="' + banner[2] + '">' + banner[1] + '</button><div class="carousel-dots"><button class="' + (state.banner === 0 ? "selected" : "") + '" data-action="banner" data-index="0"></button><button class="' + (state.banner === 1 ? "selected" : "") + '" data-action="banner" data-index="1"></button></div></section>' +
+      '<section class="privacy-card"><span class="privacy-icon">' + ic("shield",29) + '</span><p>TEST preview hii hutumia taarifa za mfano pekee. Usiweke taarifa zako binafsi au taarifa za kifedha katika mazingira haya ya majaribio.</p></section>' +
+      '<h2 class="stats-heading">My Stats</h2><div class="stats-grid">' + stats.map(item =>
+        '<button class="stat-tile" data-action="go" data-screen="' + item[3] + '"><div class="stat-top"><strong>' + item[0] + '</strong><span>' + ic(item[2],16) + '</span></div><div class="stat-label">' + item[1] + '</div></button>'
+      ).join("") + '</div>', false);
   }
 
-  function toastMarkup() {
-    if (!state.toast) return "";
-    return '<div class="toast" role="status">' + state.toast + '</div>';
+  function creditCard(item) {
+    return '<button class="credit-offer-card" data-action="credit-detail" data-id="' + item.id + '">' +
+      '<div class="credit-card-top"><div class="credit-limit"><strong>' + item.limit + '</strong><span>' + item.currency + '</span></div><div class="credit-deadline">' + ic("clock",12) + '<b>' + item.deadline + '</b></div></div>' +
+      '<div class="credit-data-row"><span>' + ic("tag",12) + item.code + '</span><span>' + ic("percent",12) + item.interest + '</span></div>' +
+      '<div class="credit-data-row"><span>' + ic("file",12) + item.type + '</span><span>' + ic("bank",12) + item.bank + '</span></div></button>';
   }
-
-  function shell(title, body, active, options = {}) {
-    const homeHeader = options.home;
-    const header = homeHeader
-      ? '<header class="appbar"><button class="icon-btn" data-action="open-drawer" aria-label="Open menu">' + icon("menu") + '</button><div class="appbar-title">' + brand() + '</div><button class="icon-btn" data-action="navigate" data-screen="notifications" aria-label="Notifications">' + icon("bell") + '</button></header>'
-      : '<header class="appbar"><button class="icon-btn" data-action="back" aria-label="Go back">' + icon("back") + '</button><div class="appbar-title"><strong>' + title + '</strong><small>TEST Mobile preview</small></div><button class="icon-btn" data-action="open-drawer" aria-label="Open menu">' + icon("menu") + '</button></header>';
-
-    return '<main class="device">' + statusBar() + header +
-      '<section class="app-content">' + demoNotice() + body + '</section>' +
-      bottomNav(active) + drawer() + toastMarkup() + '</main>';
+  function marketplace() {
+    return mainShell("Marketplace Credit Offers",'<div class="page-count">Page 1 of 1</div><div class="credit-list">' + creditOffers.map(creditCard).join("") + '</div><div class="page-footnote">Sample values are displayed for preview only.</div>');
   }
-
-  function welcomeScreen() {
-    return '<main class="device">' + statusBar() +
-      '<section class="welcome-screen">' +
-      '<div class="welcome-top">' + brand() + '<span class="preview-pill">Live preview</span></div>' +
-      '<div class="welcome-main"><div class="welcome-kicker">A clearer way to explore finance</div>' +
-      '<h1>Your financial options, in one place.</h1>' +
-      '<p>Explore a sample lending marketplace, review fictional credit offers and follow an application journey in this interactive TEST preview.</p>' +
-      '<div class="welcome-visual"><div class="welcome-orbit"></div><div class="welcome-mini-card"><small>Marketplace preview</small><strong>Explore your options</strong><span>DEMO ENVIRONMENT</span></div></div></div>' +
-      '<div class="welcome-actions"><button class="btn btn-amber" data-action="start-demo">Explore the app ' + icon("arrow", 17) + '</button>' +
-      '<button class="btn btn-ghost" data-action="go-login">View demo sign in</button>' +
-      '<p class="welcome-note">No sign-up or password is required. All information is fictional and stays in this browser session.</p></div>' +
-      '</section></main>';
-  }
-
-  function loginScreen() {
-    return '<main class="device">' + statusBar() +
-      '<header class="appbar"><button class="icon-btn" data-action="navigate" data-screen="welcome" aria-label="Back">' + icon("back") + '</button><div class="appbar-title">' + brand() + '</div></header>' +
-      '<section class="app-content login-wrap"><div class="login-intro"><h1>Welcome back</h1><p>Sign in screen preview. This form does not authenticate or send any information.</p></div>' +
-      '<div class="demo-login-note">Demo access is available below. Use any sample details or skip sign-in completely.</div>' +
-      '<form class="form-card" id="login-form"><div class="field"><label for="login-email">Email address</label><input id="login-email" type="email" placeholder="name@example.com" value="alex.mrema@example.test" /></div>' +
-      '<div class="field"><label for="login-password">Password</label><input id="login-password" type="password" placeholder="Enter any text" value="preview-only" /></div>' +
-      '<button class="btn btn-primary" type="submit">Continue in preview ' + icon("arrow", 16) + '</button>' +
-      '<button class="btn btn-outline" type="button" style="margin-top:9px" data-action="start-demo">Skip sign in — explore demo</button></form>' +
-      '<p class="muted-note">The preview has no real login, account creation, password reset or identity verification.</p></section></main>';
-  }
-
-  function homeScreen() {
-    const body = '<div style="margin-bottom:14px"><p class="view-subtitle">Good morning,</p><h1 class="view-heading">' + state.user.name.split(" ")[0] + ' 👋</h1><p class="view-subtitle">Here is a snapshot of your demo account.</p></div>' +
-      '<div class="hero-card"><div class="hero-eyebrow">Find your next opportunity</div><h2>Explore finance options that fit your plans.</h2><p>Compare illustrative listings from fictional institutions in one simple marketplace.</p><button class="btn btn-amber btn-small" data-action="navigate" data-screen="offers">Explore credit offers ' + icon("arrow", 14) + '</button></div>' +
-      '<div class="stats-grid"><div class="stat-card"><small><span class="stat-dot"></span>Credit offers</small><strong>04</strong></div><div class="stat-card"><small><span class="stat-dot"></span>Applications</small><strong>' + String(state.applications.length).padStart(2, "0") + '</strong></div><div class="stat-card"><small><span class="stat-dot"></span>In progress</small><strong>' + state.applications.filter(a => a.status !== "Approved" && a.status !== "Rejected").length.toString().padStart(2, "0") + '</strong></div></div>' +
-      '<div class="section-heading"><h2>Quick access</h2><button data-action="open-drawer">View all</button></div>' +
-      '<div class="shortcut-grid">' +
-      '<button class="shortcut" data-action="navigate" data-screen="offers"><span class="shortcut-icon">' + icon("wallet", 17) + '</span><span><strong>Credit offers</strong><small>Browse the marketplace</small></span></button>' +
-      '<button class="shortcut" data-action="navigate" data-screen="loanFlow"><span class="shortcut-icon">' + icon("plus", 17) + '</span><span><strong>Apply for a loan</strong><small>Start a demo request</small></span></button>' +
-      '<button class="shortcut" data-action="navigate" data-screen="applications"><span class="shortcut-icon">' + icon("file", 17) + '</span><span><strong>My applications</strong><small>Track sample progress</small></span></button>' +
-      '<button class="shortcut" data-action="navigate" data-screen="help"><span class="shortcut-icon">' + icon("help", 17) + '</span><span><strong>How to apply</strong><small>Understand the steps</small></span></button></div>' +
-      '<div class="section-heading"><h2>Featured offers</h2><button data-action="navigate" data-screen="offers">See all</button></div>' +
-      '<div class="offer-list">' + offers.slice(0, 2).map(offerCard).join("") + '</div>' +
-      '<div class="section-heading"><h2>Recent activity</h2><button data-action="navigate" data-screen="applications">View all</button></div>' +
-      applicationList(state.applications.slice(0, 2));
-    return shell("Home", body, "home", { home: true });
-  }
-
-  function offerCard(item) {
-    return '<article class="offer-card"><div class="offer-top"><div class="institution"><div class="institution-mark">' + item.initials + '</div><div class="institution-name"><strong>' + item.institution + '</strong><small>Illustrative institution</small></div></div><span class="demo-tag">DEMO LISTING</span></div>' +
-      '<h3>' + item.product + '</h3><p>' + item.description + '</p>' +
-      '<div class="offer-metrics"><div class="metric"><small>Amount</small><strong>' + item.amount.replace(" – ", "–") + '</strong></div><div class="metric"><small>Rate</small><strong>' + item.rate + '</strong></div><div class="metric"><small>Term</small><strong>' + item.term + '</strong></div></div>' +
-      '<div class="offer-footer"><small>' + (item.category === "business" ? "Business finance" : "Personal finance") + '</small><button class="btn btn-outline btn-small" data-action="open-offer" data-id="' + item.id + '">View details ' + icon("chevron", 13) + '</button></div></article>';
-  }
-
-  function offersScreen() {
-    const filtered = offers.filter(item => state.offerFilter === "all" || item.category === state.offerFilter);
-    const body = '<div><h1 class="view-heading">Credit marketplace</h1><p class="view-subtitle">Browse fictional offers created for this preview.</p></div>' +
-      '<div class="section-heading"><h2>Explore offers</h2><span class="demo-tag">4 SAMPLE LISTINGS</span></div>' +
-      '<div class="filter-row">' +
-      '<button class="filter-chip ' + (state.offerFilter === "all" ? "active" : "") + '" data-action="offer-filter" data-filter="all">All offers</button>' +
-      '<button class="filter-chip ' + (state.offerFilter === "personal" ? "active" : "") + '" data-action="offer-filter" data-filter="personal">Personal</button>' +
-      '<button class="filter-chip ' + (state.offerFilter === "business" ? "active" : "") + '" data-action="offer-filter" data-filter="business">Business</button>' +
-      '</div><div class="offer-list">' + (filtered.length ? filtered.map(offerCard).join("") : emptyState("No offers in this category", "Choose another filter to see the sample listings.")) + '</div>' +
-      '<p class="muted-note">Offer names, rates, amounts and terms are invented for interface testing. They are not available financial products.</p>';
-    return shell("Credit Offers", body, "offers");
-  }
-
-  function offerDetailScreen() {
-    const item = currentOffer();
-    const body = '<div class="detail-hero"><small>' + item.institution + ' · fictional institution</small><h2>' + item.product + '</h2><p>' + item.description + '</p><div style="margin-top:13px"><span class="demo-tag">ILLUSTRATIVE DEMO OFFER</span></div></div>' +
-      '<div class="section-heading"><h2>Offer overview</h2></div><div class="detail-grid">' +
-      '<div class="detail-cell"><small>Indicative amount</small><strong>' + item.amount + '</strong></div>' +
-      '<div class="detail-cell"><small>Illustrative rate</small><strong>' + item.rate + '</strong></div>' +
-      '<div class="detail-cell"><small>Sample repayment term</small><strong>' + item.term + '</strong></div>' +
-      '<div class="detail-cell"><small>Sample fee</small><strong>' + item.fee + '</strong></div></div>' +
-      '<div class="section-heading"><h2>Before you continue</h2></div><div class="panel" style="padding:14px"><p class="view-subtitle">This screen is only a product-detail prototype. No lender has supplied or approved this offer. Applying below creates a local sample entry and does not send a request.</p></div>' +
-      '<div style="margin-top:15px"><button class="btn btn-primary" data-action="apply-credit">Try demo application ' + icon("arrow", 16) + '</button></div>' +
-      '<button class="btn btn-outline" style="margin-top:8px" data-action="back-to-offers">Back to marketplace</button>';
-    return shell("Offer Details", body, "offers");
-  }
-
-  function creditApplyScreen() {
-    const item = currentOffer();
-    const body = '<h1 class="view-heading">Credit application</h1><p class="view-subtitle">Try the sample form for ' + item.product + '.</p>' +
-      '<div class="inline-note">This is a local-only demonstration. Submitting adds a fictional application to the preview; nothing is transmitted.</div>' +
-      '<form class="form-card" id="credit-form"><div class="field"><label for="credit-name">Applicant name</label><input id="credit-name" name="name" value="' + state.user.name + '" required /></div>' +
-      '<div class="field"><label for="credit-amount">Requested amount (TZS)</label><input id="credit-amount" name="amount" type="number" min="50000" step="50000" value="500000" required /></div>' +
-      '<div class="field"><label for="credit-purpose">Purpose</label><select id="credit-purpose" name="purpose"><option>Personal expenses</option><option>Education</option><option>Business growth</option><option>Working capital</option></select></div>' +
-      '<button class="btn btn-primary" type="submit">Submit demo application</button><button class="btn btn-outline" type="button" style="margin-top:8px" data-action="back-to-detail">Cancel</button></form>';
-    return shell("Apply for Credit", body, "offers");
-  }
-
-  function applicationList(items) {
-    if (!items.length) return emptyState("No applications yet", "Start a demo loan or credit application to see it appear here.");
-    return '<div>' + items.map(item =>
-      '<article class="application-card"><div class="application-head"><div><strong>' + item.name + '</strong><small>' + item.id + ' · ' + item.type + ' application</small></div><span class="status ' + statusClass(item.status) + '">' + item.status + '</span></div>' +
-      '<div class="application-meta"><small>' + item.date + '</small><strong>' + money(item.amount) + '</strong></div></article>'
-    ).join("") + '</div>';
-  }
-
-  function applicationsScreen() {
-    const filtered = state.applications.filter(item => state.appFilter === "all" || item.type.toLowerCase() === state.appFilter);
-    const body = '<h1 class="view-heading">My applications</h1><p class="view-subtitle">Track the sample requests in your demo account.</p>' +
-      '<div class="section-heading"><h2>Application history</h2><span class="demo-tag">' + state.applications.length + ' RECORDS</span></div>' +
-      '<div class="tab-row">' +
-      '<button class="tab-chip ' + (state.appFilter === "all" ? "active" : "") + '" data-action="app-filter" data-filter="all">All</button>' +
-      '<button class="tab-chip ' + (state.appFilter === "loan" ? "active" : "") + '" data-action="app-filter" data-filter="loan">Loans</button>' +
-      '<button class="tab-chip ' + (state.appFilter === "credit" ? "active" : "") + '" data-action="app-filter" data-filter="credit">Credit</button>' +
-      '</div>' + applicationList(filtered) +
-      '<div style="margin-top:14px"><button class="btn btn-primary" data-action="navigate" data-screen="loanFlow">Start a loan application ' + icon("arrow", 16) + '</button></div>' +
-      '<p class="muted-note">Application statuses and reference numbers are sample values only.</p>';
-    return shell("Loan Applications", body, "applications");
-  }
-
-  function loanFlowScreen() {
-    const body = '<h1 class="view-heading">Apply for a loan</h1><p class="view-subtitle">A guided sample application journey.</p>' +
-      '<div class="progress-row"><span class="progress-segment active"></span><span class="progress-segment active"></span><span class="progress-segment"></span></div>' +
-      '<div class="section-heading"><h2>1. Employment type</h2></div>' +
-      '<div class="choice-grid">' +
-      '<button class="choice ' + (state.employment === "employed" ? "active" : "") + '" data-action="employment" data-value="employed">' + icon("briefcase", 22) + '<strong>Employed</strong><small>Earn a regular salary or wage</small></button>' +
-      '<button class="choice ' + (state.employment === "self-employed" ? "active" : "") + '" data-action="employment" data-value="self-employed">' + icon("building", 22) + '<strong>Self-employed</strong><small>Run a business or work independently</small></button>' +
-      '</div>' +
-      '<div class="section-heading"><h2>2. Request details</h2></div>' +
-      '<form class="form-card" id="loan-form"><input type="hidden" name="employment" value="' + state.employment + '" />' +
-      '<div class="field"><label for="loan-amount">Requested amount (TZS)</label><input id="loan-amount" name="amount" type="number" min="50000" step="50000" value="1000000" required /><span class="field-hint">Enter a sample amount between TZS 50,000 and TZS 20,000,000.</span></div>' +
-      '<div class="field"><label for="loan-purpose">Purpose of the loan</label><select id="loan-purpose" name="purpose"><option>Personal expenses</option><option>Education</option><option>Medical expenses</option><option>Business investment</option><option>Home improvement</option></select></div>' +
-      (state.employment === "employed" ? '<div class="field"><label for="employer">Employer name (sample)</label><input id="employer" name="employer" placeholder="Enter a fictional employer" required /></div>' : '<div class="field"><label for="business">Business or activity (sample)</label><input id="business" name="employer" placeholder="Enter a fictional business" required /></div>') +
-      '<div class="field"><label for="loan-notes">Additional notes <span style="font-weight:500;color:var(--m)">(optional)</span></label><textarea id="loan-notes" name="notes" placeholder="Add a short note"></textarea></div>' +
-      '<button class="btn btn-primary" type="submit">Review and submit demo request ' + icon("arrow", 16) + '</button>' +
-      '<button class="btn btn-outline" type="button" style="margin-top:8px" data-action="navigate" data-screen="home">Cancel</button></form>';
-    return shell("Apply for a Loan", body, "applications");
-  }
-
-  function profileScreen() {
-    const body = '<h1 class="view-heading">My profile</h1><p class="view-subtitle">Your sample account information.</p>' +
-      '<div class="profile-card" style="margin-top:16px"><div class="avatar">' + initials(state.user.name) + '</div><h2>' + state.user.name + '</h2><p>' + state.user.email + '</p><div style="margin-top:14px"><span class="demo-tag">PERSONAL DEMO ACCOUNT</span></div></div>' +
-      '<div class="section-heading"><h2>Account settings</h2></div><div class="profile-menu">' +
-      '<button data-action="navigate" data-screen="editProfile"><span>' + icon("edit") + 'Edit personal details</span>' + icon("chevron", 16) + '</button>' +
-      '<button data-action="toast" data-message="Password management is not active in this preview.">' + '<span>' + icon("shield") + 'Security settings</span>' + icon("chevron", 16) + '</button>' +
-      '<button data-action="navigate" data-screen="help"><span>' + icon("help") + 'Help and guidance</span>' + icon("chevron", 16) + '</button>' +
-      '<button data-action="show-about"><span>' + icon("info") + 'About this preview</span>' + icon("chevron", 16) + '</button>' +
-      '</div><button class="btn btn-outline" style="margin-top:14px" data-action="restart">' + icon("logout", 16) + ' Exit demo and restart</button>';
-    return shell("Profile", body, "profile");
-  }
-
-  function editProfileScreen() {
-    const body = '<h1 class="view-heading">Edit profile</h1><p class="view-subtitle">Changes are saved only in this page session.</p>' +
-      '<form id="profile-form" class="form-card" style="margin-top:16px"><div class="field"><label for="profile-name">Full name</label><input id="profile-name" name="name" value="' + state.user.name + '" required /></div>' +
-      '<div class="field"><label for="profile-email">Email address</label><input id="profile-email" name="email" type="email" value="' + state.user.email + '" required /></div>' +
-      '<div class="field"><label for="profile-phone">Phone number</label><input id="profile-phone" name="phone" value="' + state.user.phone + '" required /></div>' +
-      '<button class="btn btn-primary" type="submit">Save demo profile</button><button class="btn btn-outline" type="button" style="margin-top:8px" data-action="navigate" data-screen="profile">Cancel</button></form>';
-    return shell("Edit Profile", body, "profile");
-  }
-
-  function helpScreen() {
-    const questions = [
-      ["Is this a real loan marketplace?", "No. This is a front-end preview using fictional institutions, products, rates and sample application statuses."],
-      ["Does submitting an application contact a lender?", "No. Submissions only add a sample record to the current browser session. Nothing is sent to a server."],
-      ["Do I need an account or password?", "No. Choose Explore the app on the welcome screen or use the demo sign-in button."],
-      ["Are the rates and amounts accurate?", "No. All financial figures are invented placeholders used to demonstrate the interface."]
+  function creditDetail() {
+    const item = creditOffers.find(x => x.id === state.selectedCredit) || creditOffers[0];
+    const rows = [
+      ["Institution Code",item.bank],["Type of Financial Institution","Sample institution"],
+      ["Number of Employees","—"],["Loans Disbursed in 3 yrs","—"],
+      ["Credit Type",item.type],["Credit Product","Sample credit product"],
+      ["Credit Line",item.limit + " " + item.currency],["Interest Charge",item.interest],
+      ["Annual Fee","Sample / not applicable"],["Late Payment Fee","Sample / not applicable"],
+      ["Other Fees","See sample offer conditions"],["Payback Period",item.payback],
+      ["Application Deadline",item.deadline],["Product Promotional Content","Fictional product description for demonstration."]
     ];
-    const body = '<h1 class="view-heading">How to apply</h1><p class="view-subtitle">A simple guide to the sample journey.</p>' +
-      '<div class="section-heading"><h2>Application steps</h2></div><div class="steps">' +
-      '<div class="step-card"><strong>Explore the marketplace</strong><p>Browse sample credit and lending products from fictional institutions.</p></div>' +
-      '<div class="step-card"><strong>Review an offer</strong><p>Open a listing to see its illustrative amount, rate, term and sample fees.</p></div>' +
-      '<div class="step-card"><strong>Complete the demo form</strong><p>Select an employment type and enter fictional request details.</p></div>' +
-      '<div class="step-card"><strong>Track your application</strong><p>See the sample request appear in My Applications with a demo status.</p></div></div>' +
-      '<div class="section-heading"><h2>Frequently asked questions</h2></div>' +
-      questions.map((q, i) => '<div class="faq-item ' + (state.activeFaq === i ? "open" : "") + '"><button class="faq-question" data-action="faq" data-index="' + i + '">' + q[0] + icon("chevron", 15) + '</button><div class="faq-answer">' + q[1] + '</div></div>').join("") +
-      '<div class="inline-note" style="margin-top:14px">This preview is not a lender, financial adviser or application service. Do not enter personal or sensitive information.</div>';
-    return shell("How to Apply", body, "home");
+    return mainShell("Credit Offer Details",'<div class="detail-record"><div class="detail-record-heading"><span>Credit limit</span><strong>' + item.limit + ' ' + item.currency + '</strong><small>' + item.bank + '</small></div>' +
+      rows.map(row => '<div class="detail-row"><span>' + row[0] + '</span><b>' + row[1] + '</b></div>').join("") +
+      '<button class="flutter-button secondary full-width" data-action="info-toast">Apply for this Credit Offer</button></div>');
   }
-
-  function notificationsScreen() {
-    const body = '<h1 class="view-heading">Notifications</h1><p class="view-subtitle">Sample updates for your demo account.</p>' +
-      '<div class="application-card" style="margin-top:16px"><div class="institution"><div class="institution-mark">' + icon("file", 17) + '</div><div class="institution-name"><strong>Application received</strong><small>Today · Demo notification</small></div></div><p class="view-subtitle" style="margin-top:10px">Your sample loan application has been added to the preview.</p></div>' +
-      '<div class="application-card" style="margin-top:10px"><div class="institution"><div class="institution-mark">' + icon("wallet", 17) + '</div><div class="institution-name"><strong>New offers available</strong><small>Yesterday · Demo notification</small></div></div><p class="view-subtitle" style="margin-top:10px">There are four fictional marketplace listings to explore.</p></div>' +
-      '<p class="muted-note">Push notifications are not enabled in this website preview.</p>';
-    return shell("Notifications", body, "home");
+  function employmentSelection() {
+    return mainShell("Apply for a Loan/Credit",'<div class="employment-options">' +
+      '<button class="employment-option" data-action="go" data-screen="loan-employed"><span class="employment-icon">' + ic("briefcase",30) + '</span><span class="employment-copy"><b>Employed Applicants</b><i>Waombaji Walioajiriwa</i></span></button>' +
+      '<button class="employment-option" data-action="go" data-screen="loan-self-employed"><span class="employment-icon">' + ic("shop",30) + '</span><span class="employment-copy"><b>Self-Employed Applicants</b><i>Waombaji Waliojiajiri</i></span></button></div>');
   }
-
-  function emptyState(title, message) {
-    return '<div class="empty-state">' + icon("file", 26) + '<strong>' + title + '</strong><p>' + message + '</p></div>';
+  function loanForm(self) {
+    const title = self ? "Self-Employed" : "Employed";
+    return mainShell(title + " Loan Application",'<form class="application-form" id="loan-form"><h3 class="form-section-title">' + title + ' Applicant Details</h3>' +
+      field("Full Name","Jina Kamili","Enter full name","applicant-name") +
+      field("Phone Number","Namba ya Simu","+255...","applicant-phone","tel") +
+      field(self ? "Business Name" : "Employer Name",self ? "Jina la Biashara" : "Jina la Mwajiri",self ? "Business name" : "Employer name","applicant-work") +
+      '<label class="flutter-field"><span class="field-label"><b>Loan Amount /</b> Kiasi cha Mkopo</span><input name="loan-amount" type="number" min="50000" placeholder="e.g. 1000000" required></label>' +
+      '<label class="flutter-field"><span class="field-label"><b>Loan Purpose /</b> Madhumuni ya Mkopo</span><select name="loan-purpose"><option>Personal needs</option><option>Education</option><option>Business</option><option>Home improvement</option></select></label>' +
+      '<button class="login-submit" type="submit">Continue</button><div class="page-footnote">Demo form only. No application is transmitted.</div></form>');
+  }
+  function appCard(item) {
+    const status = item.status.toLowerCase().includes("review") ? "review" : item.status.toLowerCase().includes("approved") ? "approved" : "pending";
+    return '<button class="my-application-card" data-action="application-detail"><div class="my-app-top"><div><strong>' + item.amount + '</strong><span>' + item.currency + '</span></div><b class="application-status ' + status + '">' + item.status + '</b></div>' +
+      '<div class="my-app-meta"><span>' + ic("tag",12) + item.code + '</span><span>' + ic("clock",12) + item.elapsed + '</span></div>' +
+      '<div class="my-app-meta"><span>' + ic("file",12) + item.type + '</span><span>' + ic("calendar",12) + item.date + '</span></div></button>';
+  }
+  function myLoanApplications() {
+    return mainShell("My Loan Applications",'<div class="page-count">Page 1 of 1</div>' +
+      (state.loanApplications.length ? '<div class="my-application-list">' + state.loanApplications.map(appCard).join("") + '</div>' :
+        '<div class="empty-apps">' + ic("info",30) + '<p>You currently have no loan applications</p><button class="flutter-button secondary" data-action="go" data-screen="select-employment">Apply for a Loan/Credit</button></div>'));
+  }
+  function myCreditApplications() {
+    const rows = state.creditApplications.filter(x => state.creditFilter === "all" || (state.creditFilter === "approved" ? x.status === "Approved" : x.status !== "Pending"));
+    return mainShell("Credit Offer Applications",'<div class="application-tabs"><button class="' + (state.creditFilter === "all" ? "active" : "") + '" data-action="credit-filter" data-filter="all">All</button><button class="' + (state.creditFilter === "approved" ? "active" : "") + '" data-action="credit-filter" data-filter="approved">Approved</button><button class="' + (state.creditFilter === "replied" ? "active" : "") + '" data-action="credit-filter" data-filter="replied">Replied</button></div>' +
+      (rows.length ? '<div class="my-application-list">' + rows.map(appCard).join("") + '</div>' : '<div class="empty-apps">' + ic("info",30) + '<p>You currently have no credit offer applications</p></div>'));
+  }
+  function profile() {
+    return mainShell("Profile",'<div class="profile-summary"><div class="profile-avatar">' + ic("user",27) + '</div><div><strong>' + state.user.name + '</strong><small>ID: ' + state.user.id + '</small></div></div>' +
+      '<div class="profile-details"><div><span>Full Name</span><b>' + state.user.name + '</b></div><div><span>Email Address</span><b>' + state.user.email + '</b></div><div><span>Phone Number</span><b>' + state.user.phone + '</b></div></div>' +
+      '<div class="profile-actions"><button data-action="info-toast">' + ic("user",17) + ' Edit Profile</button><button data-action="info-toast">' + ic("shield",17) + ' Change Password</button><button data-action="info-toast">' + ic("shield",17) + ' Change Security Question</button><button data-action="info-toast">' + ic("calendar",17) + ' Change Birthdate</button></div>');
+  }
+  function howTo() {
+    const steps = [
+      ["Choose your account type","Select Personal or Asset Financing."],
+      ["Sign in or register","Continue using the appropriate account type."],
+      ["Browse available offers","Review marketplace credit offers and their displayed details."],
+      ["Apply for a loan or credit","Choose the relevant option and complete the application information."],
+      ["Track your applications","Open My Applications to review your application status."]
+    ];
+    return mainShell("How to Apply",'<div class="howto-list">' + steps.map((item,i) => '<div class="howto-step"><span>' + (i+1) + '</span><div><b>' + item[0] + '</b><p>' + item[1] + '</p></div></div>').join("") + '</div>');
+  }
+  function helpCenter() {
+    return mainShell("Help Center",'<div class="help-panel"><b>Help Center</b><p>This standalone preview does not connect to support channels or external services.</p></div><div class="help-panel"><b>About this preview</b><p>All account information, institutions, statuses and figures are fictional demo data.</p></div>');
+  }
+  function emptyPage(title, message, glyph = "info") {
+    return mainShell(title,'<div class="empty-apps">' + ic(glyph,30) + '<p>' + message + '</p></div>');
   }
 
   function render() {
-    switch (state.screen) {
-      case "welcome": root.innerHTML = welcomeScreen(); break;
-      case "login": root.innerHTML = loginScreen(); break;
-      case "home": root.innerHTML = homeScreen(); break;
-      case "offers": root.innerHTML = offersScreen(); break;
-      case "offerDetail": root.innerHTML = offerDetailScreen(); break;
-      case "creditApply": root.innerHTML = creditApplyScreen(); break;
-      case "applications": root.innerHTML = applicationsScreen(); break;
-      case "loanFlow": root.innerHTML = loanFlowScreen(); break;
-      case "profile": root.innerHTML = profileScreen(); break;
-      case "editProfile": root.innerHTML = editProfileScreen(); break;
-      case "help": root.innerHTML = helpScreen(); break;
-      case "notifications": root.innerHTML = notificationsScreen(); break;
-      default: state.screen = "welcome"; root.innerHTML = welcomeScreen();
-    }
+    const views = {
+      onboarding, "account-chooser":accountChooser, login, register, dashboard,
+      "credit-marketplace":marketplace, "credit-detail":creditDetail,
+      "select-employment":employmentSelection,
+      "loan-employed":() => loanForm(false), "loan-self-employed":() => loanForm(true),
+      "my-loan-applications":myLoanApplications, "my-credit-applications":myCreditApplications,
+      profile, "how-to-apply":howTo, "help-center":helpCenter,
+      "marketplace-applications":() => emptyPage("Marketplace Applications","There are no marketplace applications in this demo.","file"),
+      "fee-tables":() => emptyPage("Fee Tables","Fee tables are not connected in this standalone preview.","file"),
+      notifications:() => emptyPage("Notifications","You have no new notifications.","bell"),
+      settings:() => emptyPage("Account Settings","Account security changes are disabled in the preview.","shield")
+    };
+    root.innerHTML = (views[state.screen] || onboarding)();
+  }
+  function go(screen) {
+    state.drawer = false; state.screen = screen; render();
+    const scroller = root.querySelector(".flutter-scroll,.auth-scroll");
+    if (scroller) scroller.scrollTop = 0;
   }
 
-  function navigate(screen) {
-    state.drawerOpen = false;
-    state.screen = screen;
-    render();
-    const content = root.querySelector(".app-content");
-    if (content) content.scrollTop = 0;
-  }
-
-  root.addEventListener("click", (event) => {
-    const target = event.target.closest("[data-action]");
-    if (!target) return;
-    if (target.closest("[data-stop-propagation]") && target.dataset.action === "close-drawer" && !target.classList.contains("drawer-backdrop")) {
-      state.drawerOpen = false;
-      render();
-      return;
-    }
-
-    const action = target.dataset.action;
-    switch (action) {
-      case "start-demo": navigate("home"); break;
-      case "go-login": navigate("login"); break;
-      case "navigate": navigate(target.dataset.screen); break;
-      case "open-drawer": state.drawerOpen = true; render(); break;
+  root.addEventListener("click", event => {
+    const button = event.target.closest("[data-action]");
+    if (!button) return;
+    if (button.hasAttribute("data-drawer-panel")) return;
+    const action = button.dataset.action;
+    switch(action) {
+      case "go": go(button.dataset.screen); break;
+      case "open-drawer": state.drawer = true; render(); break;
       case "close-drawer":
-        if (target.classList.contains("drawer-backdrop") && event.target === target) { state.drawerOpen = false; render(); }
+        if (event.target === button || button.classList.contains("drawer-dismiss")) { state.drawer = false; render(); }
         break;
+      case "expand": state.expanded[button.dataset.key] = !state.expanded[button.dataset.key]; render(); break;
       case "back":
-        if (state.screen === "offerDetail") navigate("offers");
-        else if (state.screen === "creditApply") navigate("offerDetail");
-        else if (state.screen === "editProfile") navigate("profile");
-        else navigate("home");
+        if (state.screen === "credit-detail") go("credit-marketplace");
+        else if (state.screen === "loan-employed" || state.screen === "loan-self-employed") go("select-employment");
+        else if (state.screen === "login" || state.screen === "register") go("account-chooser");
+        else if (state.screen === "account-chooser") go("onboarding");
+        else go("dashboard");
         break;
-      case "open-offer":
-        state.selectedOffer = target.dataset.id;
-        navigate("offerDetail");
-        break;
-      case "offer-filter":
-        state.offerFilter = target.dataset.filter;
-        render();
-        break;
-      case "app-filter":
-        state.appFilter = target.dataset.filter;
-        render();
-        break;
-      case "employment":
-        state.employment = target.dataset.value;
-        render();
-        break;
-      case "apply-credit": navigate("creditApply"); break;
-      case "back-to-offers": navigate("offers"); break;
-      case "back-to-detail": navigate("offerDetail"); break;
-      case "faq":
-        state.activeFaq = state.activeFaq === Number(target.dataset.index) ? -1 : Number(target.dataset.index);
-        render();
-        break;
-      case "show-about":
-        state.drawerOpen = false;
-        state.toast = "TEST Mobile preview — fictional content, local interactions only.";
-        render();
-        window.clearTimeout(state.toastTimer);
-        state.toastTimer = window.setTimeout(() => { state.toast = ""; render(); }, 3000);
-        break;
-      case "restart":
-        state.applications = [
-          { id: "LN-24081", type: "Loan", name: "Personal Flex Loan", amount: 1200000, status: "Under review", date: "08 Nov 2026" },
-          { id: "CR-33017", type: "Credit", name: "SME Growth Loan", amount: 3500000, status: "Pending", date: "02 Nov 2026" }
-        ];
-        state.user = { name: "Alex Mrema", email: "alex.mrema@example.test", phone: "+255 700 000 000" };
-        state.offerFilter = "all";
-        state.appFilter = "all";
-        state.activeFaq = -1;
-        navigate("welcome");
-        break;
-      case "toast": toast(target.dataset.message || "This feature is not active in the preview."); break;
+      case "account-type": state.mode = button.dataset.mode; go("login"); break;
+      case "credit-detail": state.selectedCredit = button.dataset.id; go("credit-detail"); break;
+      case "banner": state.banner = Number(button.dataset.index); render(); break;
+      case "credit-filter": state.creditFilter = button.dataset.filter; render(); break;
+      case "application-detail": toast("Application details are sample-only in this preview."); break;
+      case "info-toast": toast("This feature is disconnected in the standalone preview."); break;
     }
   });
 
-  root.addEventListener("submit", (event) => {
+  root.addEventListener("submit", event => {
     event.preventDefault();
     const form = event.target;
-
     if (form.id === "login-form") {
-      const email = form.querySelector("#login-email").value.trim();
+      const username = form.querySelector("#login-user").value.trim();
       const password = form.querySelector("#login-password").value;
-      if (!email || !password) {
-        toast("Enter sample details or choose Skip sign in.", true);
-        return;
-      }
-      navigate("home");
-      toast("Demo session started. No authentication was performed.");
-      return;
+      if (!username || !password) { toast("Enter any demo username and password to continue."); return; }
+      go("dashboard"); toast("Demo session opened locally."); return;
     }
-
     if (form.id === "loan-form") {
-      const formData = new FormData(form);
-      const amount = Number(formData.get("amount"));
-      const employer = String(formData.get("employer") || "").trim();
-      if (!Number.isFinite(amount) || amount < 50000 || amount > 20000000) {
-        toast("Enter a sample amount between TZS 50,000 and TZS 20,000,000.", true);
-        return;
+      const data = new FormData(form);
+      const amount = Number(data.get("loan-amount"));
+      if (!String(data.get("applicant-name") || "").trim() || !Number.isFinite(amount) || amount < 50000) {
+        toast("Complete the sample details to continue."); return;
       }
-      if (!employer) {
-        toast("Add a fictional employer or business name to continue.", true);
-        return;
-      }
-      const id = "LN-" + String(Date.now()).slice(-6);
-      state.applications.unshift({
-        id,
-        type: "Loan",
-        name: String(formData.get("purpose") || "Loan application"),
-        amount,
-        status: "Pending",
-        date: "09 Nov 2026"
+      state.loanApplications.unshift({
+        code:"LN-" + String(Date.now()).slice(-5),
+        amount:amount.toLocaleString("en-TZ"), currency:"TZS",
+        type:String(data.get("loan-purpose") || "Personal Loan"),
+        status:"Pending", date:"09 Nov 2026", elapsed:"Just now"
       });
-      navigate("applications");
-      toast("Demo request added locally as " + id + ".");
-      return;
-    }
-
-    if (form.id === "credit-form") {
-      const formData = new FormData(form);
-      const amount = Number(formData.get("amount"));
-      if (!Number.isFinite(amount) || amount < 50000) {
-        toast("Enter a valid sample amount.", true);
-        return;
-      }
-      const id = "CR-" + String(Date.now()).slice(-6);
-      state.applications.unshift({
-        id,
-        type: "Credit",
-        name: currentOffer().product,
-        amount,
-        status: "Pending",
-        date: "09 Nov 2026"
-      });
-      navigate("applications");
-      toast("Demo credit request added locally as " + id + ".");
-      return;
-    }
-
-    if (form.id === "profile-form") {
-      const formData = new FormData(form);
-      state.user = {
-        name: String(formData.get("name") || state.user.name).trim(),
-        email: String(formData.get("email") || state.user.email).trim(),
-        phone: String(formData.get("phone") || state.user.phone).trim()
-      };
-      navigate("profile");
-      toast("Demo profile updated in this session.");
+      go("my-loan-applications"); toast("Demo application added locally.");
     }
   });
 
