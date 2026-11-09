@@ -385,7 +385,7 @@
   root.addEventListener("click", (event) => {
     const target = event.target.closest("[data-action]");
     if (!target) return;
-    if (target.closest("[data-stop-propagation]") && target.dataset.action === "close-drawer") {
+    if (target.closest("[data-stop-propagation]") && target.dataset.action === "close-drawer" && !target.classList.contains("drawer-backdrop")) {
       state.drawerOpen = false;
       render();
       return;
@@ -398,7 +398,7 @@
       case "navigate": navigate(target.dataset.screen); break;
       case "open-drawer": state.drawerOpen = true; render(); break;
       case "close-drawer":
-        if (target.classList.contains("drawer-backdrop")) { state.drawerOpen = false; render(); }
+        if (target.classList.contains("drawer-backdrop") && event.target === target) { state.drawerOpen = false; render(); }
         break;
       case "back":
         if (state.screen === "offerDetail") navigate("offers");
