@@ -767,3 +767,84 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   #root { padding: 8px; }
   .device { height: calc(100vh - 16px); min-height: 620px; }
 }
+
+
+/* Asset Financing dashboard — mirrors the separate Flutter business dashboard. */
+.business-info-card {
+  width: 100%;
+  margin: 10px 0 8px;
+  padding: 16px;
+  border: 1px solid rgba(16,47,91,.18);
+  border-radius: 12px;
+  background: var(--white);
+}
+.business-info-card > strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--t);
+  font-size: 18px;
+  font-weight: 800;
+}
+.business-info-card > div {
+  margin-top: 4px;
+  color: var(--t);
+  font-size: 13px;
+  line-height: 1.35;
+}
+.business-info-card > div b { color: var(--s); }
+.business-carousel {
+  width: 100%;
+  min-height: 160px;
+  margin-top: 8px;
+  padding: 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--white);
+  background: var(--t);
+  text-align: center;
+}
+.business-carousel > div {
+  max-width: 320px;
+  color: var(--white);
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 500;
+}
+.business-carousel > button {
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 30px;
+  color: var(--t);
+  background: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+}
+.business-dots { height: 14px; margin: 8px 0 12px; display: flex; justify-content: center; gap: 6px; }
+.business-dots span { width: 6px; height: 6px; border-radius: 3px; background: #b0c4d8; }
+.business-dots span.active { width: 16px; background: var(--t); }
+.business-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.business-stat {
+  height: 100px;
+  padding: 16px;
+  border: 0;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--t);
+  background: var(--white);
+  text-align: left;
+}
+.business-stat > div { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.business-stat > div strong { font-size: 32px; line-height: .85; }
+.business-stat > div svg { color: rgba(130,153,178,.85); }
+.business-stat > span { color: var(--s); font-size: 13px; line-height: 1.2; }
