@@ -13,15 +13,20 @@ A responsive, browser-based preview of the TEST lending-marketplace mobile app.
 
 Open `index.html` in a browser, or serve this directory with any static web server.
 
-## GitHub Pages
+## Publish with GitHub Pages
 
-This repository includes a GitHub Actions workflow for deployment. In the repository settings, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. Pushes to `main` will then publish the preview.
+1. Open this repository's **Settings → Pages**.
+2. Under **Build and deployment**, choose **Deploy from a branch**.
+3. Select branch **main** and folder **/(root)**, then select **Save**.
+4. GitHub Pages will publish the site at the repository's Pages URL after its first deployment.
+
+The site is static and does not need a build step or backend.
 
 ## Project structure
 
 - `index.html` — application entry point.
 - `styles.css` — Royal Blue and Amber design system.
 - `app.js` — screens, navigation and demo interactions.
-- `.github/workflows/deploy-pages.yml` — GitHub Pages deployment.
+- `.nojekyll` — keeps GitHub Pages from running Jekyll processing.
 
 All sample information is illustrative and must not be treated as a real financial offer.
