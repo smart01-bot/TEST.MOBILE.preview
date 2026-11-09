@@ -292,4 +292,10 @@
   });
 
   render();
+  window.setInterval(() => {
+    if (state.screen === "dashboard" && !state.drawer) {
+      state.banner = (state.banner + 1) % 2;
+      render();
+    }
+  }, 5000);
 })();
