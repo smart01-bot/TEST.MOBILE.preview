@@ -848,3 +848,768 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .business-stat > div strong { font-size: 32px; line-height: .85; }
 .business-stat > div svg { color: rgba(130,153,178,.85); }
 .business-stat > span { color: var(--s); font-size: 13px; line-height: 1.2; }
+
+
+/* --------------------------------------------------------------------------
+   TEST Mobile visual refinement
+   Keep the original app structure and interactions; refine only presentation.
+   -------------------------------------------------------------------------- */
+
+:root {
+  --p: #12386B;
+  --s: #2D70C5;
+  --ac: #94620A;
+  --am: #F2B94B;
+  --soft: #FFF7E7;
+  --t: #20334B;
+  --ta: #637B98;
+  --m: #748399;
+  --b: #E3EAF2;
+  --bg: #F6F8FC;
+  --ok: #16835D;
+  --er: #B42318;
+  --white: #FFFFFF;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  color: var(--t);
+  background: #EDF2F8;
+  letter-spacing: -0.01em;
+}
+button, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid rgba(45,112,197,.24);
+  outline-offset: 2px;
+}
+
+#root { padding: 24px 14px; }
+.device {
+  width: min(100%, 420px);
+  height: min(900px, calc(100dvh - 48px));
+  min-height: 640px;
+  border: 1px solid rgba(18,56,107,.10);
+  border-radius: 30px;
+  background: var(--bg);
+  box-shadow:
+    0 28px 70px rgba(25,48,79,.13),
+    0 4px 14px rgba(25,48,79,.05);
+}
+.system-status {
+  flex-basis: 29px;
+  height: 29px;
+  padding: 0 20px;
+  color: #53657B;
+  background: #FBFCFE;
+  font-size: 10px;
+  letter-spacing: .01em;
+}
+.system-status-right { gap: 7px; color: #53657B; }
+
+.main-topbar {
+  min-height: 58px;
+  flex-basis: 58px;
+  gap: 4px;
+  margin: 7px 12px 12px;
+  padding: 0 7px 0 9px;
+  border: 1px solid #E8EDF4;
+  border-radius: 16px;
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 3px 12px rgba(28,55,88,.035);
+}
+.topbar-title {
+  color: #213650;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+.topbar-icon {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+  border-radius: 12px;
+  color: #345578;
+  transition: background .18s ease, color .18s ease;
+}
+.topbar-icon:hover { color: var(--p); background: #F0F5FB; }
+.topbar-icon:active { background: #E7EFF8; }
+.flutter-scroll {
+  padding: 0 12px 18px;
+  scrollbar-color: #D4DDE8 transparent;
+}
+.flutter-scroll::-webkit-scrollbar-thumb,
+.auth-scroll::-webkit-scrollbar-thumb { background: #D4DDE8; }
+
+.standalone-notice {
+  margin: 0 0 13px;
+  padding: 10px 12px;
+  border: 1px solid #F1E1BC;
+  border-left: 3px solid var(--am);
+  border-radius: 10px;
+  color: #775615;
+  background: #FFFAEF;
+  font-size: 10px;
+  line-height: 1.5;
+  font-weight: 600;
+  text-align: left;
+}
+.dashboard-user {
+  min-height: 68px;
+  gap: 12px;
+  padding: 5px 3px 13px;
+}
+.user-placeholder, .profile-avatar {
+  width: 48px;
+  height: 48px;
+  flex-basis: 48px;
+  border-radius: 15px;
+  color: #315D91;
+  background: #E7EFF9;
+}
+.dashboard-user-copy strong {
+  color: #233A55;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 700;
+}
+.dashboard-user-copy div {
+  margin-top: 4px;
+  color: var(--m);
+  font-size: 11px;
+  font-weight: 600;
+}
+.dashboard-user-copy div span { color: var(--m); }
+.dashboard-user-copy div b { color: var(--s); }
+
+.home-carousel {
+  position: relative;
+  isolation: isolate;
+  height: auto;
+  min-height: 194px;
+  margin: 0 0 13px;
+  padding: 23px 20px 20px;
+  overflow: hidden;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 19px;
+  background:
+    radial-gradient(circle at 94% 4%, rgba(242,185,75,.22), transparent 34%),
+    linear-gradient(135deg, #153D72 0%, #205B9A 100%);
+  text-align: left;
+  box-shadow: 0 10px 24px rgba(18,56,107,.14);
+}
+.home-carousel::after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  width: 190px;
+  height: 190px;
+  right: -94px;
+  bottom: -118px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%;
+  box-shadow: 0 0 0 22px rgba(255,255,255,.035), 0 0 0 46px rgba(255,255,255,.025);
+}
+.carousel-message {
+  max-width: 270px;
+  margin: 0 0 19px;
+  color: #FFFFFF;
+  font-size: 20px;
+  line-height: 1.28;
+  font-weight: 700;
+  letter-spacing: -.035em;
+}
+.carousel-button {
+  width: auto;
+  min-height: 42px;
+  height: 42px;
+  padding: 0 19px;
+  border-radius: 11px;
+  color: #233A55;
+  background: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0,0,0,.08);
+  transition: transform .18s ease, background .18s ease;
+}
+.carousel-button:hover { background: #FFF8E9; transform: translateY(-1px); }
+.carousel-dots {
+  position: absolute;
+  right: 19px;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.carousel-dots button {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: rgba(255,255,255,.45);
+}
+.carousel-dots button.selected { width: 19px; background: var(--am); }
+
+.privacy-card {
+  margin: 0 0 17px;
+  padding: 13px 14px;
+  gap: 11px;
+  border: 1px solid #E3ECF7;
+  border-radius: 14px;
+  background: #F0F6FD;
+}
+.privacy-icon { padding-top: 1px; color: #3D6D9F; }
+.privacy-card p {
+  color: #526A85;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.stats-heading {
+  margin: 0 0 10px;
+  padding: 0 1px;
+  color: #263D58;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+.stats-grid { gap: 10px; }
+.stat-tile {
+  min-height: 108px;
+  height: auto;
+  padding: 15px;
+  border: 1px solid #E8EDF4;
+  border-radius: 15px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(29,54,83,.025);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.stat-tile:hover {
+  border-color: #D5E1EF;
+  box-shadow: 0 7px 18px rgba(29,54,83,.07);
+  transform: translateY(-1px);
+}
+.stat-top strong {
+  color: #233A55;
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -.045em;
+}
+.stat-top span { color: #91A4BA; }
+.stat-label {
+  color: #52749A;
+  font-size: 11px;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.page-count {
+  min-height: 28px;
+  padding: 0 2px 8px;
+  color: #8290A2;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+}
+.credit-list, .my-application-list { gap: 11px; }
+.credit-offer-card, .my-application-card {
+  padding: 18px;
+  border: 1px solid #E7EDF4;
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(29,54,83,.025);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.credit-offer-card:hover, .my-application-card:hover {
+  border-color: #D6E2F0;
+  box-shadow: 0 8px 20px rgba(29,54,83,.07);
+  transform: translateY(-1px);
+}
+.credit-limit strong {
+  color: #233A55;
+  font-size: 21px;
+  letter-spacing: -.035em;
+}
+.credit-limit span {
+  margin-top: 5px;
+  color: #52749A;
+  font-size: 11px;
+}
+.credit-deadline {
+  gap: 5px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  color: #367A64;
+  background: #ECF7F1;
+  font-size: 10px;
+}
+.credit-data-row { margin-top: 16px; }
+.credit-data-row + .credit-data-row { margin-top: 9px; }
+.credit-data-row span {
+  color: #71839A;
+  font-size: 10px;
+  font-weight: 600;
+}
+.page-footnote {
+  margin: 16px 5px 20px;
+  color: #8A97A8;
+  font-size: 10px;
+}
+
+.detail-record {
+  padding: 15px;
+  border: 1px solid #E5EBF3;
+  border-radius: 17px;
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(29,54,83,.035);
+}
+.detail-record-heading {
+  margin: -15px -15px 8px;
+  padding: 21px 18px;
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(135deg, #153D72, #28649F);
+}
+.detail-record-heading span, .detail-record-heading small { color: rgba(255,255,255,.78); font-size: 11px; }
+.detail-record-heading strong { margin: 7px 0; font-size: 25px; letter-spacing: -.035em; }
+.detail-row {
+  padding: 13px 1px;
+  border-bottom-color: #EDF1F5;
+  gap: 5px;
+}
+.detail-row span { color: #8290A2; font-size: 10px; }
+.detail-row b { color: #30445E; font-size: 12px; font-weight: 600; }
+.flutter-button {
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: filter .18s ease, transform .18s ease;
+}
+.flutter-button.secondary { color: #FFFFFF; background: #2D70C5; }
+.flutter-button.primary { color: #213650; background: var(--am); }
+.flutter-button:hover, .login-submit:hover { filter: brightness(.98); }
+.flutter-button.full-width { margin-top: 17px; }
+
+.employment-options { gap: 11px; }
+.employment-option {
+  min-height: 86px;
+  padding: 17px;
+  gap: 14px;
+  border: 1px solid #E6ECF3;
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(29,54,83,.025);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.employment-option:hover {
+  border-color: #C9D9EB;
+  box-shadow: 0 7px 18px rgba(29,54,83,.06);
+  transform: translateY(-1px);
+}
+.employment-icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 13px;
+  color: #2D70C5;
+  background: #EDF4FC;
+}
+.employment-copy b { color: #263D58; font-size: 13px; font-weight: 700; }
+.employment-copy i { margin-top: 5px; color: #7B8DA4; font-size: 11px; font-style: normal; }
+
+.my-app-top > div strong { color: #263D58; font-size: 20px; letter-spacing: -.035em; }
+.my-app-top > div span { color: #52749A; font-size: 11px; }
+.application-status { padding: 6px 9px; border-radius: 8px; font-size: 10px; }
+.application-status.pending { color: #8A641A; background: #FFF6E4; }
+.application-status.review { color: #2D65A1; background: #EDF4FC; }
+.application-status.approved { color: #187452; background: #EAF6F0; }
+.my-app-meta { margin-top: 15px; }
+.my-app-meta + .my-app-meta { margin-top: 8px; }
+.my-app-meta span { color: #75869B; font-size: 10px; font-weight: 500; }
+.application-tabs { gap: 7px; margin: 0 0 13px; }
+.application-tabs button {
+  min-height: 35px;
+  padding: 7px 15px;
+  border: 1px solid #E2E9F1;
+  border-radius: 10px;
+  color: #607790;
+  background: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+}
+.application-tabs button.active {
+  color: #FFFFFF;
+  border-color: var(--p);
+  background: var(--p);
+}
+.empty-apps {
+  margin: 8px 0;
+  padding: 28px 20px;
+  border: 1px dashed #DCE5EF;
+  border-radius: 16px;
+  background: #FFFFFF;
+  color: #8A9AAF;
+}
+.empty-apps p { color: #637B96; font-size: 12px; line-height: 1.5; }
+
+.application-form {
+  padding: 18px;
+  border: 1px solid #E5EBF3;
+  border-radius: 17px;
+  background: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(29,54,83,.03);
+}
+.form-section-title { margin: 1px 0 17px; color: #263D58; font-size: 14px; }
+.flutter-field {
+  margin-bottom: 12px;
+  padding: 9px 12px;
+  border: 1px solid #E0E7F0;
+  border-radius: 11px;
+  background: #FFFFFF;
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.field-label { color: #62768F; font-size: 11px; }
+.field-label b { color: #2D70C5; font-weight: 600; }
+.flutter-field input, .flutter-field select {
+  height: 29px;
+  color: #263D58;
+  font-size: 13px;
+}
+.flutter-field input::placeholder { color: #A0ACBA; font-size: 12px; }
+.flutter-field:focus-within {
+  border-color: #7AA6D7;
+  background: #F8FBFF;
+  box-shadow: 0 0 0 3px rgba(45,112,197,.08);
+}
+.application-form .login-submit { width: 100%; margin-top: 8px; }
+
+.profile-summary, .profile-details, .profile-actions, .help-panel {
+  border: 1px solid #E7EDF4;
+  border-radius: 15px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(29,54,83,.025);
+}
+.profile-summary { min-height: 84px; padding: 15px; gap: 12px; }
+.profile-summary strong { color: #263D58; font-size: 14px; }
+.profile-summary small { color: #52749A; font-size: 11px; }
+.profile-details, .help-panel { padding: 15px; }
+.profile-details div { padding: 10px 0; border-bottom-color: #EDF1F5; }
+.profile-details span { color: #8592A3; font-size: 10px; }
+.profile-details b { color: #30445E; font-size: 12px; }
+.profile-actions { padding: 5px 14px; }
+.profile-actions button {
+  padding: 14px 2px;
+  border-bottom-color: #EDF1F5;
+  color: #3A506A;
+  font-size: 12px;
+}
+.howto-list { gap: 9px; }
+.howto-step {
+  padding: 14px;
+  border: 1px solid #E8EDF4;
+  border-radius: 14px;
+  background: #FFFFFF;
+}
+.howto-step > span {
+  color: #1F3D64;
+  background: #F5D58F;
+  font-size: 11px;
+}
+.howto-step b { color: #304761; font-size: 12px; }
+.howto-step p, .help-panel p { color: #7B8A9D; font-size: 11px; line-height: 1.55; }
+.help-panel { padding: 15px; gap: 11px; }
+.help-panel > span, .help-panel b { color: #315F91; font-size: 12px; }
+
+.drawer-shade { background: rgba(17,35,57,.32); backdrop-filter: blur(2px); }
+.app-drawer {
+  width: min(86%, 330px);
+  margin: 6px 0 6px 7px;
+  padding: 11px;
+  border: 1px solid rgba(220,229,239,.9);
+  border-radius: 19px;
+  background: #FFFFFF;
+  box-shadow: 12px 8px 34px rgba(16,38,65,.16);
+}
+.drawer-brand {
+  min-height: 69px;
+  padding: 7px 10px 12px;
+  border-bottom: 1px solid #EEF2F6;
+  margin-bottom: 8px;
+}
+.drawer-brand b { color: var(--p); font-size: 23px; letter-spacing: .17em; }
+.drawer-brand small { color: #8795A7; font-size: 8px; letter-spacing: .14em; }
+.drawer-row {
+  min-height: 45px;
+  padding: 9px 12px;
+  border-radius: 11px;
+  gap: 11px;
+  color: #40566F;
+  font-size: 12px;
+  font-weight: 600;
+}
+.drawer-row:hover, .drawer-group.opened > .drawer-row {
+  color: #244F7F;
+  background: #F0F5FB;
+}
+.drawer-glyph { color: #6F88A4; }
+.drawer-children { padding: 2px 0 7px 45px; }
+.drawer-child {
+  min-height: 35px;
+  padding: 7px 9px;
+  border-radius: 8px;
+  color: #687B91;
+  font-size: 11px;
+}
+.drawer-child:hover { color: var(--p); background: #F2F6FB; }
+.drawer-logout { color: #B54742; }
+
+.snackbar {
+  left: 14px;
+  right: 14px;
+  bottom: 16px;
+  padding: 13px 15px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  background: #22364D;
+  box-shadow: 0 8px 24px rgba(17,35,57,.2);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.auth-scroll { background: #F8FAFD; }
+.onboarding-content {
+  padding: 30px 29px 22px;
+  background:
+    radial-gradient(circle at 50% 17%, rgba(45,112,197,.055), transparent 33%),
+    linear-gradient(180deg, #FBFCFE 0%, #F6F8FC 100%);
+}
+.test-logo-large {
+  position: relative;
+  margin: 25px auto 31px;
+  color: var(--p);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: .21em;
+}
+.test-logo-large::after {
+  position: absolute;
+  content: "";
+  width: 31px;
+  height: 3px;
+  left: 50%;
+  bottom: -11px;
+  border-radius: 99px;
+  background: var(--am);
+  transform: translateX(-50%);
+}
+.onboarding-copy h1 {
+  margin: 8px 0 14px;
+  color: #243F60;
+  font-size: 23px;
+  line-height: 1.25;
+  letter-spacing: -.04em;
+}
+.onboarding-copy p {
+  max-width: 285px;
+  margin: 0 0 13px;
+  color: #667990;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.auth-actions { width: min(100%, 270px); gap: 9px; padding: 18px 0 10px; }
+.auth-actions .flutter-button { min-height: 49px; border-radius: 12px; font-size: 13px; }
+.auth-actions .flutter-button.secondary { color: #FFFFFF; background: #2869B3; }
+.auth-actions .flutter-button.primary { color: #263B55; background: #F3C66D; }
+.auth-footer {
+  padding: 16px 0 8px;
+  color: #8795A7;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .11em;
+}
+.account-chooser {
+  padding: 25px 18px;
+  background: linear-gradient(180deg, #FBFCFE, #F6F8FC);
+}
+.account-chooser .test-logo-large { margin-bottom: 32px; }
+.account-chooser h2 {
+  margin: 0 0 28px;
+  color: #304761;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+.account-types { gap: 12px; width: 100%; }
+.account-type {
+  width: min(46%, 154px);
+  height: 150px;
+  padding: 13px 8px;
+  border: 1px solid #E1E8F1;
+  border-radius: 16px;
+  gap: 9px;
+  color: #3D5F84;
+  background: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(29,54,83,.035);
+  font-size: 12px;
+  font-weight: 600;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.account-type:hover {
+  border-color: #AFC7E2;
+  color: var(--p);
+  background: #FFFFFF;
+  box-shadow: 0 8px 18px rgba(29,54,83,.07);
+  transform: translateY(-2px);
+}
+.account-illustration {
+  width: 59px;
+  height: 59px;
+  margin-bottom: 2px;
+  border-radius: 17px;
+  color: #2D70C5;
+  background: #EDF4FC;
+}
+.login-scroll { padding: 13px 10px 18px; }
+.login-page { padding: 0 5px; }
+.test-logo-login {
+  height: 118px;
+  color: var(--p);
+  font-size: 30px;
+  letter-spacing: .2em;
+}
+.login-card {
+  margin-top: 0;
+  padding: 19px 17px;
+  border: 1px solid #E5EBF3;
+  border-radius: 18px;
+  background: #FFFFFF;
+  box-shadow: 0 8px 25px rgba(29,54,83,.045);
+}
+.login-card-heading { margin: 0 2px 17px; align-items: center; }
+.login-card-heading b { color: #263D58; font-size: 18px; letter-spacing: -.025em; }
+.login-card-heading span { color: #9A711F; font-size: 10px; font-weight: 600; }
+.login-card .flutter-field { margin-bottom: 11px; }
+.login-forgot { margin: 0 2px 13px; }
+.link-button { color: #2D70C5; font-size: 11px; font-weight: 600; }
+.login-register { color: #7B8A9D; font-size: 10px; }
+.login-card-footer { margin-top: 22px; gap: 9px; }
+.choose-type { font-size: 10px; }
+.login-submit {
+  min-width: 106px;
+  height: 44px;
+  padding: 0 19px;
+  border-radius: 11px;
+  color: #FFFFFF;
+  background: #173F70;
+  font-size: 12px;
+  font-weight: 700;
+  transition: filter .18s ease, transform .18s ease;
+}
+.login-demo-caption {
+  margin: 11px 8px 0;
+  color: #8795A7;
+  font-size: 9px;
+  line-height: 1.55;
+}
+.login-page .auth-footer { padding: 20px 0 10px; }
+.register-page { padding: 13px 16px; }
+.register-hint { color: #748399; font-size: 12px; line-height: 1.6; }
+
+.business-info-card {
+  margin: 0 0 12px;
+  padding: 17px;
+  border: 1px solid #E5EBF3;
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(29,54,83,.025);
+}
+.business-info-card > strong {
+  margin-bottom: 10px;
+  color: #263D58;
+  font-size: 15px;
+}
+.business-info-card > div { margin-top: 6px; color: #708197; font-size: 11px; }
+.business-info-card > div b { color: #52749A; }
+.business-carousel {
+  position: relative;
+  overflow: hidden;
+  min-height: 172px;
+  margin-top: 0;
+  padding: 22px 19px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 96% 5%, rgba(242,185,75,.19), transparent 35%),
+    linear-gradient(135deg, #153D72 0%, #205B9A 100%);
+  box-shadow: 0 10px 24px rgba(18,56,107,.13);
+}
+.business-carousel > div {
+  max-width: 290px;
+  font-size: 16px;
+  line-height: 1.35;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+.business-carousel > button {
+  min-height: 39px;
+  padding: 0 16px;
+  border-radius: 10px;
+  color: #263D58;
+  background: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+}
+.business-dots { margin: 10px 0 14px; }
+.business-dots span { background: #D3DDE8; }
+.business-dots span.active { background: #D49A2E; }
+.business-stat-grid { gap: 10px; }
+.business-stat {
+  height: 105px;
+  padding: 15px;
+  border: 1px solid #E7EDF4;
+  border-radius: 15px;
+  background: #FFFFFF;
+  box-shadow: 0 3px 12px rgba(29,54,83,.025);
+}
+.business-stat > div strong { color: #263D58; font-size: 27px; letter-spacing: -.04em; }
+.business-stat > div svg { color: #91A4BA; }
+.business-stat > span { color: #52749A; font-size: 11px; font-weight: 600; }
+
+@media (max-width: 600px) {
+  body { background: var(--bg); }
+  #root { display: block; min-height: 100dvh; padding: 0; }
+  .device {
+    width: 100%;
+    height: 100dvh;
+    min-height: 560px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .system-status { background: #FBFCFE; }
+  .main-topbar { margin: 6px 10px 10px; }
+  .flutter-scroll { padding: 0 12px 20px; }
+  .onboarding-content { padding: 26px 25px 18px; }
+  .home-carousel { min-height: 188px; padding: 21px 18px 19px; }
+}
+@media (max-width: 360px) {
+  .account-types { gap: 8px; }
+  .account-type { height: 138px; font-size: 11px; }
+  .credit-offer-card, .my-application-card { padding: 15px; }
+  .credit-deadline { font-size: 9px; }
+  .login-card-footer { align-items: flex-end; }
+}
+@media (max-height: 720px) and (min-width: 601px) {
+  #root { padding: 8px; }
+  .device { height: calc(100dvh - 16px); min-height: 620px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
